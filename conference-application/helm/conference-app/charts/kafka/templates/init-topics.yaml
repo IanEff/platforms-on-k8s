@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-kafka-init-topics
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  activeDeadlineSeconds: 120
+  backoffLimit: 6
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: init-topics
+        image: apache/kafka:3.9.0
+        command:
+        - /bin/bash
+        - -c
+        - |
+          echo "Waiting for Kafka broker at {{ .Release.Name }}-kafka:9092..."
+          until /opt/kafka/bin/kafka-topics.sh \
+            --bootstrap-server {{ .Release.Name }}-kafka:9092 \
+            --list > /dev/null 2>&1; do
+            echo "Kafka not ready, retrying in 5s..."
+            sleep 5
+          done
+          echo "Kafka ready. Creating events-topic..."
+          /opt/kafka/bin/kafka-topics.sh \
+            --bootstrap-server {{ .Release.Name }}-kafka:9092 \
+            --create \
+            --topic events-topic \
+            --partitions 1 \
+            --replication-factor 1 \
+            --if-not-exists
+          echo "Done."

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: kafka
+description: Minimal Kafka chart using apache/kafka in KRaft mode (arm64 compatible)
+type: application
+version: 22.1.5
+appVersion: 3.9.0
