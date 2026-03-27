@@ -27,6 +27,13 @@ spec:
               name: kafka
               repository: https://charts.bitnami.com/bitnami
               version: "22.1.5"
+            values:
+              global:
+                imageRegistry: docker.io
+              image:
+                registry: docker.io
+                repository: bitnamilegacy/kafka
+                tag: "3.3.2"
           providerConfigRef:
             name: default
       patches:
