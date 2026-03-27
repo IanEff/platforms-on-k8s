@@ -29,6 +29,11 @@ spec:
               version: "20.1.6"
             values:
               architecture: standalone
+              global:
+                imageRegistry: docker.io
+              image:
+                registry: docker.io
+                tag: "latest"
           providerConfigRef:
             name: default
       patches:

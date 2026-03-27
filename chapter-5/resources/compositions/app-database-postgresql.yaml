@@ -29,13 +29,16 @@ spec:
               version: "12.5.9"
             values:
               image:
+                registry: docker.io
                 debug: true
+                tag: "latest"
               primary: 
                 initdb:
                   user: postgres
                   password: postgres
                   scriptsConfigMap: c4p-init-sql
               global:
+                imageRegistry: docker.io
                 postgresql:
                   auth: 
                     postgresPassword: postgres
