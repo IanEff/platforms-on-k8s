@@ -116,7 +116,7 @@ spec:
           forProvider:
             chart:
               name: conference-app
-              repository: oci://docker.io/salaboy
+              repository: oci://docker.io/robothq
               version: "v1.0.0"
             values:
               install:
